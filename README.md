@@ -312,10 +312,53 @@ pip install -r requirements.txt
 - **F1-Score:** >72%
 - **ROC-AUC:** >85%
 
-## 📝 Notes
-- The notebook follows a structured learning approach with clear day-wise sections
-- Comments explain each preprocessing step
-- Data validation checks ensure data quality throughout the pipeline
+## 📝 Notes & Important Details
+
+### Data Pipeline Features
+- **Structured Learning Approach:** Clear day-wise sections with learning progression
+- **Code Comments:** Each code block is well-documented with explanations
+- **Data Validation:** Checks at each stage ensure data quality
+- **Reproducibility:** Fixed random_state=42 ensures consistent results
+- **Stratified Splitting:** Maintains class distribution across train/test sets
+- **ColumnTransformer:** Scalable approach to handle mixed data types
+
+### Best Practices Implemented
+1. **Data Cleaning:** Handles missing values appropriately
+2. **Feature Engineering:** One-hot encoding for categorical variables
+3. **Train-Test Separation:** Prevents data leakage
+4. **Class Imbalance Awareness:** Ready for SMOTE application
+5. **Modular Code:** Functions and transformers for reusability
+
+### Files in This Project
+```
+Customer Churn Analysis/
+├── customer_churn_anaylsis.ipynb      # Main analysis notebook (253 cells)
+├── Telco-Customer-Churn.csv           # Dataset (7,042 rows × 21 columns)
+├── README.md                          # This comprehensive documentation
+└── requirements.txt                   # (Optional) Python dependencies
+```
+
+### Key Metrics & Numbers
+| Metric | Value |
+|--------|-------|
+| Original Records | 7,042 |
+| Cleaned Records | 7,032 |
+| Records Removed | 10 (0.14%) |
+| Features (Initial) | 21 |
+| Features (After Cleaning) | 19 |
+| Features (After Encoding) | 40+ |
+| Training Samples | 5,625 (80%) |
+| Testing Samples | 1,407 (20%) |
+| Churn Customers | ~27% |
+| Retained Customers | ~73% |
+
+### Code Structure
+- **Cells 1-10:** Initial setup and basic operations
+- **Cells 11-35:** Data import and exploration
+- **Cells 36-55:** Data cleaning and validation
+- **Cells 56-75:** Feature preparation and target encoding
+- **Cells 76-100:** Train-test splitting with stratification
+- **Cells 101-253:** Feature engineering, one-hot encoding, and final preprocessing
 
 ## 👨‍💻 Author
 Student - NBICT ML Program (4-1 Semester)
