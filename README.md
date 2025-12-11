@@ -158,6 +158,37 @@ X_preprocessed = pre_processed.fit_transform(X)
 tr_df = pd.DataFrame(X_preprocessed, columns=all_iv_names)
 ```
 
+### Day 8: Training the Baseline Model & Evaluation
+
+**Objective:** Train a baseline logistic regression model and evaluate threshold-independent performance using ROC AUC.
+
+- **Pipeline:** `ColumnTransformer` preprocessing (`pre_processed`) + `LogisticRegression(max_iter=5000, class_weight='balanced')` wrapped in a `Pipeline` to keep preprocessing inside training and inference.
+- **Train:** Fit the pipeline on the training set: `pipe_lr.fit(X_trainset, y_trainset)`.
+- **Predict probabilities:** Use `pipe_lr.predict_proba(X_testset)[:, 1]` to get the probability of `Churn=Yes`.
+- **Key metric — ROC AUC:** `roc_auc_score(y_testset, proba)` measures how well the model ranks positive cases above negative ones (range 0.0–1.0; 0.5 = random).
+
+**Why use ROC AUC?** It is threshold-independent and robust for imbalanced classes, making it a good first check for ranking performance before selecting an operational threshold.
+
+**Example code (compute AUC and plot ROC):**
+```python
+from sklearn.metrics import roc_auc_score, roc_curve
+
+proba = pipe_lr.predict_proba(X_testset)[:, 1]
+auc = roc_auc_score(y_testset, proba)
+fpr, tpr, _ = roc_curve(y_testset, proba)
+
+import matplotlib.pyplot as plt
+plt.plot(fpr, tpr, label=f'AUC = {auc:.3f}')
+plt.plot([0, 1], [0, 1], '--', color='gray')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('ROC Curve')
+plt.legend()
+plt.show()
+```
+
+**Next steps after baseline:** tune hyperparameters, cross-validate, try other algorithms (Random Forest, XGBoost), calibrate probabilities if needed, and produce SHAP explanations for feature importance.
+
 ---
 
 ## 📊 Data Transformation Summary
